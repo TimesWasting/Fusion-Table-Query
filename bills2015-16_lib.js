@@ -1,5 +1,6 @@
 /*jslint browser: true*/
 /*global $, google, jQuery, console, alert*/
+/*jshint multistr: true */
 
 /*!
  * Searchable Map Template with Google Fusion Tables
@@ -380,51 +381,3 @@ https://www.googleapis.com/fusiontables/v2/query?sql=SELECT+ROWID%2C+First_Name%
 			return decodeURIComponent(text);
 		}
 	};
-
-$(function () {
-	"use strict";
-	MapsLib.initialize();
-	//$("#search_address").geocomplete();
-
-	$(':checkbox').click(function() {
-		MapsLib.doSearch();
-	});
-
-	$(':radio').click(function() {
-		MapsLib.doSearch();
-	});
-		   /*
-		   $('#search_radius').change(function(){
-		   MapsLib.doSearch();
-		   });
-		   */
-		   /*
-		   $('#search').click(function(){
-		   MapsLib.doSearch();
-		   });
-		   */
-		   /*
-		   $('#find_me').click(function(){
-           MapsLib.findMe(); 
-           return false;
-		   });
-		   */
-		   /*
-		   $('#order_by').change(function(){
-		   MapsLib.doSearch();
-		   });
-		   */
-	$('#reset').click(function() {
-	//$.address.parameter('address','');
-		MapsLib.initialize();
-		return false;
-	});
-          
-	$(':text').keydown(function(e) {
-		var key =  e.keyCode ? e.keyCode : e.which;
-		if (key === 13) {
-			$('#search').click();
-			return false;
-		}
-	});
-});
