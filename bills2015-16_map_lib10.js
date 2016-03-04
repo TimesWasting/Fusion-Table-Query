@@ -58,7 +58,7 @@ BillsLib = {
         whereClause = BillsLib.keyColumn + " not equal to ''";
 
         //-----custom filters-------
-/*
+
         type_column1 = "'Floor'";
         tempWhereClause = [];
         if ($("#cbType1").is(':checked')) {tempWhereClause.push("House");
@@ -86,7 +86,7 @@ BillsLib = {
         if ($("#cbType8").is(':checked')) {tempWhereClause.push("Oppose");
                                           }
         whereClause += " AND " + type_column3 + " IN ('" + tempWhereClause.join('\',\',\',\'') + "')";
- */
+/* */
             //-------end of custom filters--------
 
             // Sends filters to search function
@@ -108,7 +108,7 @@ BillsLib = {
         queryStr.push("SELECT " + selectColumns);
         queryStr.push(" FROM " + BillsLib.fusionTableId);
         queryStr.push(" WHERE " + whereClause);
-        queryStr.push("ORDER BY " + orderColumn);
+        queryStr.push(" ORDER BY " + orderColumn);
         sql = encodeURIComponent(queryStr.join(" "));
         console.log(queryStr);
         console.log(sql);
@@ -140,8 +140,7 @@ https://www.googleapis.com/fusiontables/v2/query?sql=SELECT+ROWID%2C+First_Name%
     getCount: function (whereClause) {
         "use strict";
         var selectColumns = "Count()";
-        BillsLib.query(selectColumns, whereClause,
-            "BillsLib.displaySearchCount");
+        BillsLib.query(selectColumns, whereClause, "BillsLib.displaySearchCount");
     },
 
     displaySearchCount: function (json) {
@@ -154,18 +153,20 @@ https://www.googleapis.com/fusiontables/v2/query?sql=SELECT+ROWID%2C+First_Name%
         }
 
         name = BillsLib.recordNamePlural;
+
         if (numRows === 1) {
             name = BillsLib.recordName;
-            $("#result_count").fadeOut(function () {
-                $("#result_count").html(BillsLib.addCommas(numRows) + " " + name);
-            });
-            $("#result_count").fadeIn();
         }
+        $("#result_count").fadeOut(function () {
+            $("#result_count").html(BillsLib.addCommas(numRows) + " " + name);
+        });
+        $("#result_count").fadeIn();
     },
 
     getList: function (whereClause) {
         "use strict";
-        var selectColumns = "Bill, Description, Section, Action, Bill_Link, Year, Floor, Test1, Test2, Test3, Test4, Test5, Test6,"; selectColumns += " Test7, Test8, Test9, Test10, Test11, Test12";
+        var selectColumns = "Bill, Description, Section, Action, Bill_Link, Year, Floor, Test1, Test2, Test3, Test4, Test5, Test6,";
+        selectColumns += " Test7, Test8, Test9, Test10, Test11, Test12";
         BillsLib.query(selectColumns, whereClause, "BillsLib.displayList");
     },
 
@@ -257,3 +258,34 @@ https://www.googleapis.com/fusiontables/v2/query?sql=SELECT+ROWID%2C+First_Name%
 
 };
 console.log("BillsLib Loaded");
+
+$(function () {
+    "use strict";
+    BillsLib.initialize();
+    //$("#search_bills").geocomplete();
+
+    $(':checkbox').click(function () {
+        BillsLib.doSearch();
+    });
+
+    $(':radio').click(function () {
+        BillsLib.doSearch();
+    });
+          
+    $('#order_by').change(function () {
+        BillsLib.doSearch();
+    });
+          
+    $('#reset').click(function () {
+        BillsLib.initialize();
+        return false;
+    });
+          
+    $(":text").keydown(function (e) {
+        var key =  e.keyCode || e.which;
+        if (key === 13) {
+            $('#search').click();
+            return false;
+        }
+    });
+});
