@@ -1,0 +1,148 @@
+<div class="custom_background">
+<!-- <div id="map_canvas" style="height:250;"></div>
+<p class="pull-right" style="font-size: small;">
+<a href="http://derekeder.com/searchable_map_template/">Searchable Map Template</a> by <a href="http://derekeder.com">Derek Eder</a>.
+</p> -->
+<div class="container-fluid">
+<div class="row-fluid">
+<div class="span4">
+<div class="well">
+<h2>Bill Search</h2>
+<input class="input-block-level" id="search_bills" maxlength="150" size="40" placeholder="Enter a bill number" type="text" value="">
+<!-- <label>
+within
+<select class="input-medium" id="search_radius">
+<option value="400">2 blocks</option>
+<option value="805">1/2 mile</option>
+<option value="1610">1 mile</option>
+<option value="3220">2 miles</option>
+</select>
+</label> -->
+<input class="btn btn-default formbutton" id="search" type="button" value="Search">
+<button class="btn" id="reset">Reset</button>
+</div>
+<div class="well">
+<div class="content-left">
+<div>
+<h2>Filter by</h2>
+<h3>Floor</h3>
+<ul class="inputs-list unstyled">
+    <li>
+    <label class="checkbox inline">
+    <input type="checkbox" id="cbType1">
+    <span class="filter-box">House</span>
+    </label>
+    </li>
+    <li>
+    <label class="checkbox inline">
+    <input type="checkbox" id="cbType2">
+    <span class="filter-box">Senate</span>
+    </label>
+    </li>
+</ul>
+</div>
+<div>
+<h3>
+Year
+</h3>
+<ul class="inputs-list unstyled">
+    <li>
+    <label class="checkbox inline">
+    <input type="checkbox" id="cbType3">
+    <span class="filter-box">2015</span>
+    </label>
+    </li>
+    <li>
+    <label class="checkbox inline">
+    <input type="checkbox" id="cbType4">
+    <span class="filter-box">2016</span>
+    </label>
+    </li>
+</ul>
+</div>
+</div>
+<div class="content-right">
+<div id="status-filter">
+<h3>Action</h3>
+<ul class="inputs-list unstyled">
+    <li>
+    <label class="checkbox inline">
+    <input type="checkbox" id="cbType5">
+    <span class="filter-box">Pending</span>
+    </label>
+    </li>
+    <li>
+    <label class="checkbox inline">
+    <input type="checkbox" id="cbType6">
+    <span class="filter-box">Monitor</span>
+    </label>
+    </li>
+    <li>
+    <label class="checkbox inline">
+    <input type="checkbox" id="cbType7">
+    <span class="filter-box">Support</span>
+    </label>
+    </li>
+    <li>
+    <label class="checkbox inline">
+    <input type="checkbox" id="cbType8">
+    <span class="filter-box">Oppose</span>
+    </label>
+    </li>
+</ul>
+</div>
+<div id="status-filter2">
+<h2>Order Results</h2>
+<ul class="inputs-list unstyled">
+    <li>
+    <label>
+    by
+    <select class="input-medium" id="order_by">
+    <option value="Floor">Floor (House – Senate)</option>
+    <option value="Floor DESC">Floor (Senate – House)</option>
+    <option value="Year">Year (2015– 2016)</option>
+    <option value="Year DESC">Year (2016 – 2015)</option>
+    <option value="Bill">Bill (1 – 10)</option>
+    <option value="Bill DESC">Bill (10 – 1)</option>
+    </select>
+    </label>
+    </li>
+</ul>
+</div>
+</div>
+</div>
+<table class="ViewTable1" width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tbody>
+        <tr>
+            <th><span class="alert alert-info lead" id="result_count"></span>
+            </th>
+            <th style="text-align:right">
+            </th>
+        </tr>
+    </tbody>
+</table>
+<div class="well">
+<table class="billTracking gridTableClean">
+    <thead>
+        <tr>
+            <th class="bill">Bill</th>
+            <th class="description">Description</th>
+            <th class="section">Section</th>
+            <th class="action">Action</th>
+            <th class="testimony">Testimony</th>
+        </tr>
+    </thead>
+    <tbody id="results_list">
+    </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript" src="https://www.ksbar.org/resource/resmgr/FusionTable-Map/jquery.js"></script>
+<script type="text/javascript" src="https://www.ksbar.org/resource/resmgr/FusionTable-Map/bootstrap.js"></script>
+<script type="text/javascript" src="https://www.ksbar.org/resource/resmgr/FusionTable-Map/jquery.address.min.js"></script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places"></script>
+<script type="text/javascript" src="https://www.ksbar.org/resource/resmgr/FusionTable-Map/jquery.geocomplete.min.js"></script>
+<script type="text/javascript" src="https://www.ksbar.org/resource/resmgr/Maps/Legislative/bills2015-16_map_lib10.js" ></script>
