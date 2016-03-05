@@ -66,7 +66,7 @@ BillsLib = {
         if ($("#cbType2").is(':checked')) {tempWhereClause.push("Senate");
                                           }
         whereClause += " AND " + type_column1 + " IN ('" + tempWhereClause.join('\',\'') + "')";
-
+/*
         type_column2 = "'Year'";
         tempWhereClause = [];
         if ($("#cbType3").is(':checked')) {tempWhereClause.push("2015");
