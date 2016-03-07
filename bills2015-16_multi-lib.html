@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2011 Google Inc. All Rights Reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Fusion Tables Layer Example: Basic JSONP Request</title>
+    <style type="text/css">
+      #map-canvas {
+        height: 500px;
+        width: 600px;
+      }
+
+      .store-name {
+        font-weight: bold;
+        margin: 10px 0px 0px 0px;
+        padding: 0px;
+      }
+
+      .address, .delivers {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+	<link rel="stylesheet" href="style.css">
+    <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
+    </script>
+    <script type="text/javascript">
+      function initialize() {
+        var query = "SELECT Bill, Description, Section, Action, Bill_Link, Year, Floor, Test1, Test2, Test3, Test4, Test5, Test6,";
+        query += " Test7, Test8, Test9, Test10, Test11, Test12 FROM " +
+            '1hG3WwbAJXbLJD5OEPL4LKrSWkTj6pzzwTt9Ussmx';
+        var encodedQuery = encodeURIComponent(query);
+
+        // Construct the URL
+        var url = ['https://www.googleapis.com/fusiontables/v1/query'];
+        url.push('?sql=' + encodedQuery);
+        url.push('&key=AIzaSyBHnYpEqDQaRrMF_TNRvbTZhmPEKEsw_2E');
+        url.push('&callback=?');
+
+		var testIcon, data, template, results_list, row;
+        testIcon = "https://www.ksbar.org/resource/resmgr/jquery/ui-kba-icons_approve_26x26.png";
+		
+		  results_list = $("#results_list");
+        results_list.hide().empty(); //hide the existing list and empty it out first
+		  
+        // Send the JSONP request using jQuery
+        $.ajax({
+          url: url.join(''),
+          dataType: 'jsonp',
+          success: function (data) {
+            var rows = data['rows'];
+            var ftData = document.getElementById('ft-data');
+            for (var i in rows) {
+              
+				var test, bill, descrip, section, action, link, year, floor, billLink, testimony, t, cellIf;
+                
+                bill = row[i][0];
+                descrip = row[i][1];
+                section = row[i][2];
+                action = row[i][3];
+                link = row[i][4];
+                year = row[i][5];
+                floor = row[i][6];
+                    
+                billLink = "<a href='" + link + "' id='" + bill + "_legislative_bill-tracking' />" + bill + "</a> ";
+
+                //start of variable rows (refers to "for & if statements below)
+                testimony = [];
+                for (t = 7; t < data[row].length; t++) {
+                    cellIf = row[i][t];
+                    if (!cellIf) {test = "";
+                                 } else {test = "<a href='" + cellIf + "' id='" + bill + "'><img src='" + testIcon + "'/></a> ";
+                                         }
+                    testimony += test;
+                }
+                console.log(testimony);
+				
+				
+				var dataTemplate = document.createElement('tr');
+                dataTemplate.className = action;
+                var billElement = document.createElement('td');
+                billElement.innerHTML = billLink;
+                billElement.className = 'bill';
+                var descripElement = document.createElement('td');
+                descripElement.innerHTML = descrip;
+                descripElement.className = 'description';
+                var sectionElement = document.createElement('td');
+                sectionElement.innerHTML = section;
+                sectionElement.className = 'section';
+                var actionElement = document.createElement('td');
+                actionElement.innerHTML = action;
+                actionElement.className = 'action';
+                var testElement = document.createElement('td');
+                testElement.innerHTML = testimony;
+                testElement.className = 'testimony';
+
+                dataTemplate.appendChild(billElement);
+                dataTemplate.appendChild(descripElement);
+                dataTemplate.appendChild(sectionElement);
+                dataTemplate.appendChild(actionElement);
+                dataTemplate.appendChild(testElement);
+                
+                document.getElementById('2016-house').appendChild(dataTemplate);
+				
+				
+            }
+          }
+        });
+      }
+    </script>
+  </head>
+  <body onload="initialize()">
+   <table class="ViewTable1" width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tbody>
+        <tr>
+            <th><span class="alert alert-info lead" id="result_count"></span>
+            </th>
+            <th style="text-align:right">
+            </th>
+        </tr>
+    </tbody>
+</table>
+<div class="well">
+<table class="billTracking gridTableClean">
+    <thead>
+        <tr>
+            <th class="bill">Bill</th>
+            <th class="description">Description</th>
+            <th class="section">Section</th>
+            <th class="action">Action</th>
+            <th class="testimony">Testimony</th>
+        </tr>
+    </thead>
+    <tbody id="2016-house">
+    </tbody>
+</table>
+</div>
+
+  </body>
+</html>

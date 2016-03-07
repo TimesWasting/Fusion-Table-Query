@@ -1,4 +1,5 @@
 /*jslint browser: true*/
+/*jslint plusplus: true */
 /*global $, google, jQuery, console, alert*/
 /*jshint multistr: true */
 
@@ -29,6 +30,7 @@ BillsLib = {
 
         //orderBy: "Year",	//order by field in database (if you want descending, put DESC after the column title)
     keyColumn: "Bill",
+	
     initialize: function () {
         "use strict";
         $("#result_count").html("");
@@ -43,7 +45,7 @@ BillsLib = {
         //$("#order_by").val("Year");
         $("#results_list").hide();
         $("#result_count").hide();
-        $("search_bills").val("");
+        $("#search_bills").val("");
 
 
         //run the default search
@@ -66,7 +68,7 @@ BillsLib = {
         if ($("#cbType2").is(':checked')) {tempWhereClause.push("Senate");
                                           }
         whereClause += " AND " + type_column1 + " IN ('" + tempWhereClause.join('\',\'') + "')";
-/*
+
         type_column2 = "'Year'";
         tempWhereClause = [];
         if ($("#cbType3").is(':checked')) {tempWhereClause.push("2015");
@@ -184,7 +186,7 @@ https://www.googleapis.com/fusiontables/v2/query?sql=SELECT+ROWID%2C+First_Name%
         if (data === null) {
             //clear results list
             results_list.append(
-                "<li><span class='lead'>No results found</span></li>"
+                "<tr><td><span class='lead'>No results found</span></td></tr>"
             );
         } else {
             for (row in data) {
