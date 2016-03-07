@@ -1,6 +1,4 @@
-
 /*jslint browser: true*/
-/*jslint plusplus: true */
 /*global $, google, jQuery, console, alert*/
 /*jshint multistr: true */
 
@@ -16,8 +14,8 @@
  *
  */
 
-var BillsLib = BillsLib || {};
-BillsLib = {
+var BillsLib_2015 = BillsLib_2015 || {};
+BillsLib_2015 = {
 
         //the encrypted Table ID of your Fusion Table (found under File => About)
     fusionTableId: "1hG3WwbAJXbLJD5OEPL4LKrSWkTj6pzzwTt9Ussmx",
@@ -29,36 +27,35 @@ BillsLib = {
     recordName: "bill",
     recordNamePlural: "bills",
 
-        //orderBy: "Year",	//order by field in database (if you want descending, put DESC after the column title)
-    keyColumn: "Bill",
-	
-    initialize: function () {
+    keyColumn: "Year",
+    
+    initialize2015: function () {
         "use strict";
         $("#result_count").html("");
         $("#rbType1").attr("checked", "checked");
         $("#results_list").hide();
         $("#result_count").hide();
 
-        BillsLib.searchrecords = null;
+        BillsLib_2015.searchrecords = null;
 
         //reset filters
         $(":checkbox").attr("checked", "checked");
         //$("#order_by").val("Year");
-        $("#results_list").hide();
-        $("#result_count").hide();
-        $("#search_bills").val("");
+        $("#results_2015").hide();
+        $("#result_count-2015").hide();
+        $("search_bills").val("");
 
 
         //run the default search
-        BillsLib.doSearch();
+        BillsLib_2015.doSearch();
     },
 
     doSearch: function (location) {
         "use strict";
-        //BillsLib.clearSearch();
+        //BillsLib_2015.clearSearch();
         var address, whereClause, type_column1, type_column2, type_column3, tempWhereClause;
 
-        whereClause = BillsLib.keyColumn + " not equal to ''";
+        whereClause = BillsLib_2015.keyColumn + " = '2015'";
 
         //-----custom filters-------
 
@@ -69,7 +66,7 @@ BillsLib = {
         if ($("#cbType2").is(':checked')) {tempWhereClause.push("Senate");
                                           }
         whereClause += " AND " + type_column1 + " IN ('" + tempWhereClause.join('\',\'') + "')";
-
+/*
         type_column2 = "'Year'";
         tempWhereClause = [];
         if ($("#cbType3").is(':checked')) {tempWhereClause.push("2015");
@@ -77,7 +74,7 @@ BillsLib = {
         if ($("#cbType4").is(':checked')) {tempWhereClause.push("2016");
                                           }
         whereClause += " AND " + type_column2 + " IN ('" + tempWhereClause.join('\',\'') + "')";
-
+*/
         type_column3 = "'Action'";
         tempWhereClause = [];
         if ($("#cbType5").is(':checked')) {tempWhereClause.push("Support");
@@ -91,21 +88,20 @@ BillsLib = {
         if ($("#cbType9").is(':checked')) {tempWhereClause.push("Neutral");
                                           }
         if ($("#cbType10").is(':checked')) {tempWhereClause.push("Review");
-                                           }
-        
+                                          }
         whereClause += " AND " + type_column3 + " IN ('" + tempWhereClause.join('\',\',\',\'') + "')";
 /* */
             //-------end of custom filters--------
 
             // Sends filters to search function
-        BillsLib.submitSearch(whereClause);
+        BillsLib_2015.submitSearch(whereClause);
     },
         
     submitSearch: function (whereClause) {
         "use strict";
         //get using all filters
-        BillsLib.getCount(whereClause);
-        BillsLib.getList(whereClause);
+        BillsLib_2015.getCount(whereClause);
+        BillsLib_2015.getList(whereClause);
     },
         
     query: function (selectColumns, whereClause, callback, orderColumn) {
@@ -114,7 +110,7 @@ BillsLib = {
         var queryStr, sql;
         queryStr = [];
         queryStr.push("SELECT " + selectColumns);
-        queryStr.push(" FROM " + BillsLib.fusionTableId);
+        queryStr.push(" FROM " + BillsLib_2015.fusionTableId);
         queryStr.push(" WHERE " + whereClause);
         queryStr.push(" ORDER BY " + orderColumn);
         sql = encodeURIComponent(queryStr.join(" "));
@@ -122,7 +118,7 @@ BillsLib = {
         console.log(sql);
         $.ajax({
             url: "https://www.googleapis.com/fusiontables/v2/query?sql=" + sql +
-                "&callback=" + callback + "&key=" + BillsLib.googleApiKey,
+                "&callback=" + callback + "&key=" + BillsLib_2015.googleApiKey,
             dataType: "jsonp"
         });
     },
@@ -148,51 +144,51 @@ https://www.googleapis.com/fusiontables/v2/query?sql=SELECT+ROWID%2C+First_Name%
     getCount: function (whereClause) {
         "use strict";
         var selectColumns = "Count()";
-        BillsLib.query(selectColumns, whereClause, "BillsLib.displaySearchCount");
+        BillsLib_2015.query(selectColumns, whereClause, "BillsLib_2015.displaySearchCount");
     },
 
     displaySearchCount: function (json) {
         "use strict";
-        BillsLib.handleError(json);
+        BillsLib_2015.handleError(json);
         var numRows, name;
         numRows = 0;
         if (json["rows"] !== null) {
             numRows = json["rows"][0];
         }
 
-        name = BillsLib.recordNamePlural;
+        name = BillsLib_2015.recordNamePlural;
 
         if (numRows === 1) {
-            name = BillsLib.recordName;
+            name = BillsLib_2015.recordName;
         }
-        $("#result_count").fadeOut(function () {
-            $("#result_count").html(BillsLib.addCommas(numRows) + " " + name);
+        $("#result_count-2015").fadeOut(function () {
+            $("#result_count-2015").html(BillsLib_2015.addCommas(numRows) + " " + name);
         });
-        $("#result_count").fadeIn();
+        $("#results_count-2015").fadeIn();
     },
 
     getList: function (whereClause) {
         "use strict";
         var selectColumns = "Bill, Description, Section, Action, Bill_Link, Year, Floor, Test1, Test2, Test3, Test4, Test5, Test6,";
         selectColumns += " Test7, Test8, Test9, Test10, Test11, Test12";
-        BillsLib.query(selectColumns, whereClause, "BillsLib.displayList");
+        BillsLib_2015.query(selectColumns, whereClause, "BillsLib_2015.displayList");
     },
 
     displayList: function (json) {
         "use strict";
-        BillsLib.handleError(json);
+        BillsLib_2015.handleError(json);
         var testIcon, data, template, results_list, row;
         testIcon = "https://www.ksbar.org/resource/resmgr/jquery/ui-kba-icons_approve_26x26.png";
         data = json["rows"];
         template = "";
 
-        results_list = $("#results_list");
+        results_list = $("#results_2015");
         results_list.hide().empty(); //hide the existing list and empty it out first
 
         if (data === null) {
             //clear results list
             results_list.append(
-                "<tr><td><span class='lead'>No results found</span></td></tr>"
+                "<li><span class='lead'>No results found</span></li>"
             );
         } else {
             for (row in data) {
@@ -244,7 +240,7 @@ https://www.googleapis.com/fusiontables/v2/query?sql=SELECT+ROWID%2C+First_Name%
                 dataTemplate.appendChild(actionElement);
                 dataTemplate.appendChild(testElement);
                 
-                document.getElementById('results_list').appendChild(dataTemplate);
+                document.getElementById('results_2015').appendChild(dataTemplate);
             }
         }
         results_list.fadeIn();
@@ -265,27 +261,27 @@ https://www.googleapis.com/fusiontables/v2/query?sql=SELECT+ROWID%2C+First_Name%
     }
 
 };
-console.log("BillsLib Loaded");
+console.log("BillsLib_2015-2015 Loaded");
 
 $(function () {
     "use strict";
-    BillsLib.initialize();
+    BillsLib_2015.initialize2015();
     //$("#search_bills").geocomplete();
 
     $(':checkbox').click(function () {
-        BillsLib.doSearch();
+        BillsLib_2015.doSearch();
     });
 
     $(':radio').click(function () {
-        BillsLib.doSearch();
+        BillsLib_2015.doSearch();
     });
           
     $('#order_by').change(function () {
-        BillsLib.doSearch();
+        BillsLib_2015.doSearch();
     });
           
     $('#reset').click(function () {
-        BillsLib.initialize();
+        BillsLib_2015.initialize2015();
         return false;
     });
           

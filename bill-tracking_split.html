@@ -1,0 +1,227 @@
+<style>
+    .col1 {
+    float: left;
+    display: inline-block;
+    overflow: auto;
+    width: 49%;
+    //padding-right: 5px;
+    }
+    .col2 {
+    float: right;
+    display: inline-block;
+    overflow: auto;
+    width: 49%;
+    //padding-left: 5px;
+    }
+</style>
+<div class="custom_background" style="overflow: auto;">
+<div class="container-fluid">
+<div class="row-fluid">
+<div class="span4">
+<div class="well">
+<div class="floatRt" style="border: 1px solid black; padding: 5px; width: 300px;"><span class="bold">Legend: </span>
+<table style="display: inline-block; vertical-align: middle; margin: 0px auto;">
+    <tbody>
+        <tr>
+            <td class="support" style="padding: 5px;">Support</td>
+            <td>KBA supports bill</td>
+        </tr>
+        <tr>
+            <td class="monitor" style="padding: 5px;">Monitor</td>
+            <td>Monitoring progress of bill</td>
+        </tr>
+        <tr>
+            <td class="oppose" style="padding: 5px;">Oppose</td>
+            <td>KBA opposes bill</td>
+        </tr>
+        <tr>
+            <td class="pending" style="padding: 5px;">Pending</td>
+            <td>Pending opinion</td>
+        </tr>
+        <tr>
+            <td class="review" style="padding: 5px;">Review</td>
+            <td>Section is reviewing</td>
+        </tr>
+        <tr>
+            <td class="neutral" style="padding: 5px;">Neutral</td>
+            <td>Neutral opinion of bill</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+<h1>Bill Tracking</h1>
+<h4><a href="/?legislative_archives">Bill Tracking Archives</a></h4>
+<input class="input-block-level" id="search_bills" maxlength="150" size="40" placeholder="Enter a bill number" type="text" value="">
+<input class="btn btn-default formbutton" id="search" type="button" value="Search">
+<button class="btn" id="reset">Reset</button>
+</div>
+<div class="well" style="overflow: auto;">
+<div class="floatLt">
+<div>
+<h2>Filter by</h2>
+<h3>Floor</h3>
+<ul class="inputs-list unstyled">
+    <li>
+    <label class="checkbox inline">
+    <input type="checkbox" id="cbType1">
+    <span class="filter-box">House</span>
+    </label>
+    </li>
+    <li>
+    <label class="checkbox inline">
+    <input type="checkbox" id="cbType2">
+    <span class="filter-box">Senate</span>
+    </label>
+    </li>
+</ul>
+</div>
+<div style="display: none;">
+<h3>Year</h3>
+<ul class="inputs-list unstyled">
+    <li>
+    <label class="checkbox inline">
+    <input type="checkbox" id="cbType3">
+    <span class="filter-box">2015</span>
+    </label>
+    </li>
+    <li>
+    <label class="checkbox inline">
+    <input type="checkbox" id="cbType4">
+    <span class="filter-box">2016</span>
+    </label>
+    </li>
+</ul>
+</div>
+</div>
+<div class="floatLt">
+<div id="status-filter">
+<h3>Action</h3>
+<ul class="inputs-list unstyled">
+    <li style="margin: 3px;">
+    <label class="checkbox inline">
+    <input type="checkbox" id="cbType5">
+    <span class="filter-box Support legend">Support</span>
+    </label>
+    </li>
+    <li style="margin: 3px;">
+    <label class="checkbox inline">
+    <input type="checkbox" id="cbType6">
+    <span class="filter-box Monitor legend">Monitor</span>
+    </label>
+    </li>
+    <li style="margin: 3px;">
+    <label class="checkbox inline">
+    <input type="checkbox" id="cbType7">
+    <span class="filter-box Oppose legend">Oppose</span>
+    </label>
+    </li>
+    <li style="margin: 3px;">
+    <label class="checkbox inline">
+    <input type="checkbox" id="cbType8">
+    <span class="filter-box Pending legend">Pending</span>
+    </label>
+    </li>
+    <li style="margin: 3px;">
+    <label class="checkbox inline">
+    <input type="checkbox" id="cbType9">
+    <span class="filter-box Neutral legend">Neutral</span>
+    </label>
+    </li>
+    <li style="margin: 3px;">
+    <label class="checkbox inline">
+    <input type="checkbox" id="cbType10">
+    <span class="filter-box Review legend">Review</span>
+    </label>
+    </li>
+</ul>
+</div>
+</div>
+<div id="status-filter2" class="floatLt">
+<h2>Order Results</h2>
+<ul class="inputs-list unstyled">
+    <li>
+    <label>
+    by
+    <select class="input-medium" id="order_by">
+    <option value="Bill">Bill (1 – 10)</option>
+    <option value="Bill DESC">Bill (10 – 1)</option>
+    <option value="Floor">Floor (House – Senate)</option>
+    <option value="Floor DESC">Floor (Senate – House)</option>
+    </select>
+    </label>
+    </li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="col1">
+<h2>2016 Legislature</h2>
+<p><span class="bold">Last Bill Update:</span> Monday, March 7, 2016</p>
+<p>Bill testimony is available under the action items for each bill. Bill history may be found by clicking on the appropriate bill.</p>
+<table class="ViewTable1" width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tbody>
+        <tr>
+            <th><span class="alert alert-info lead" id="results_count-2016"></span>
+            </th>
+            <th style="text-align:right">
+            </th>
+        </tr>
+    </tbody>
+</table>
+<div class="well" style="overflow: auto;">
+<table class="billTracking gridTableClean">
+    <thead>
+        <tr>
+            <th class="bill">Bill</th>
+            <th class="description">Description</th>
+            <th class="section">Section</th>
+            <th class="action">Action</th>
+            <th class="testimony">Testimony</th>
+        </tr>
+    </thead>
+    <tbody id="results_2016">
+    </tbody>
+</table>
+</div>
+</div>
+<div class="col2">
+<h2>2015 Legislature</h2>
+<p><strong>Last Bill Update:</strong>&nbsp;Tuesday, February 24, 2015</p>
+<p>Bill testimony is available under the action items for each bill. Bill history may be found by clicking on the appropriate bill. <a href="/?2015testimony">View testimony.</a></p>
+<table class="ViewTable1" width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tbody>
+        <tr>
+            <th><span class="alert alert-info lead" id="results_count-2015"></span>
+            </th>
+            <th style="text-align:right">
+            </th>
+        </tr>
+    </tbody>
+</table>
+<div class="well">
+<table class="billTracking gridTableClean">
+    <thead>
+        <tr>
+            <th class="bill">Bill</th>
+            <th class="description">Description</th>
+            <th class="section">Section</th>
+            <th class="action">Action</th>
+            <th class="testimony">Testimony</th>
+        </tr>
+    </thead>
+    <tbody id="results_2015">
+    </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript" src="https://www.ksbar.org/resource/resmgr/FusionTable-Map/jquery.js"></script>
+<script type="text/javascript" src="https://www.ksbar.org/resource/resmgr/FusionTable-Map/bootstrap.js"></script>
+<script type="text/javascript" src="https://www.ksbar.org/resource/resmgr/FusionTable-Map/jquery.address.min.js"></script>
+<!-- <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places"></script>
+-->
+<script type="text/javascript" src="https://www.ksbar.org/resource/resmgr/FusionTable-Map/jquery.geocomplete.min.js"></script>
+<script type="text/javascript" src="https://www.ksbar.org/resource/resmgr/Maps/Legislative/bills2015_lib.js"></script>
+<script type="text/javascript" src="https://www.ksbar.org/resource/resmgr/Maps/Legislative/bills2016_lib.js"></script>

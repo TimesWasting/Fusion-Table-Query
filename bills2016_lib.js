@@ -1,6 +1,4 @@
-
 /*jslint browser: true*/
-/*jslint plusplus: true */
 /*global $, google, jQuery, console, alert*/
 /*jshint multistr: true */
 
@@ -29,9 +27,8 @@ BillsLib = {
     recordName: "bill",
     recordNamePlural: "bills",
 
-        //orderBy: "Year",	//order by field in database (if you want descending, put DESC after the column title)
-    keyColumn: "Bill",
-	
+    keyColumn: "Year",
+    
     initialize: function () {
         "use strict";
         $("#result_count").html("");
@@ -44,9 +41,9 @@ BillsLib = {
         //reset filters
         $(":checkbox").attr("checked", "checked");
         //$("#order_by").val("Year");
-        $("#results_list").hide();
-        $("#result_count").hide();
-        $("#search_bills").val("");
+        $("#results_2016").hide();
+        $("#result_count-2016").hide();
+        $("search_bills").val("");
 
 
         //run the default search
@@ -58,7 +55,7 @@ BillsLib = {
         //BillsLib.clearSearch();
         var address, whereClause, type_column1, type_column2, type_column3, tempWhereClause;
 
-        whereClause = BillsLib.keyColumn + " not equal to ''";
+        whereClause = BillsLib.keyColumn + " = '2016'";
 
         //-----custom filters-------
 
@@ -69,7 +66,7 @@ BillsLib = {
         if ($("#cbType2").is(':checked')) {tempWhereClause.push("Senate");
                                           }
         whereClause += " AND " + type_column1 + " IN ('" + tempWhereClause.join('\',\'') + "')";
-
+/*
         type_column2 = "'Year'";
         tempWhereClause = [];
         if ($("#cbType3").is(':checked')) {tempWhereClause.push("2015");
@@ -77,7 +74,7 @@ BillsLib = {
         if ($("#cbType4").is(':checked')) {tempWhereClause.push("2016");
                                           }
         whereClause += " AND " + type_column2 + " IN ('" + tempWhereClause.join('\',\'') + "')";
-
+*/
         type_column3 = "'Action'";
         tempWhereClause = [];
         if ($("#cbType5").is(':checked')) {tempWhereClause.push("Support");
@@ -91,8 +88,7 @@ BillsLib = {
         if ($("#cbType9").is(':checked')) {tempWhereClause.push("Neutral");
                                           }
         if ($("#cbType10").is(':checked')) {tempWhereClause.push("Review");
-                                           }
-        
+                                          }
         whereClause += " AND " + type_column3 + " IN ('" + tempWhereClause.join('\',\',\',\'') + "')";
 /* */
             //-------end of custom filters--------
@@ -165,10 +161,10 @@ https://www.googleapis.com/fusiontables/v2/query?sql=SELECT+ROWID%2C+First_Name%
         if (numRows === 1) {
             name = BillsLib.recordName;
         }
-        $("#result_count").fadeOut(function () {
-            $("#result_count").html(BillsLib.addCommas(numRows) + " " + name);
+        $("#result_count-2016").fadeOut(function () {
+            $("#result_count-2016").html(BillsLib.addCommas(numRows) + " " + name);
         });
-        $("#result_count").fadeIn();
+        $("#results_count-2016").fadeIn();
     },
 
     getList: function (whereClause) {
@@ -186,13 +182,13 @@ https://www.googleapis.com/fusiontables/v2/query?sql=SELECT+ROWID%2C+First_Name%
         data = json["rows"];
         template = "";
 
-        results_list = $("#results_list");
+        results_list = $("#results_2016");
         results_list.hide().empty(); //hide the existing list and empty it out first
 
         if (data === null) {
             //clear results list
             results_list.append(
-                "<tr><td><span class='lead'>No results found</span></td></tr>"
+                "<li><span class='lead'>No results found</span></li>"
             );
         } else {
             for (row in data) {
@@ -244,7 +240,7 @@ https://www.googleapis.com/fusiontables/v2/query?sql=SELECT+ROWID%2C+First_Name%
                 dataTemplate.appendChild(actionElement);
                 dataTemplate.appendChild(testElement);
                 
-                document.getElementById('results_list').appendChild(dataTemplate);
+                document.getElementById('results_2016').appendChild(dataTemplate);
             }
         }
         results_list.fadeIn();
@@ -265,7 +261,7 @@ https://www.googleapis.com/fusiontables/v2/query?sql=SELECT+ROWID%2C+First_Name%
     }
 
 };
-console.log("BillsLib Loaded");
+console.log("BillsLib-2016 Loaded");
 
 $(function () {
     "use strict";
